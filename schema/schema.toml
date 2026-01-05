@@ -1,0 +1,2 @@
+# Hive schema file
+# Run `hive introspect` to populate from database
