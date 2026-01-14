@@ -1,2 +1,159 @@
-# Hive schema file
-# Run `hive introspect` to populate from database
+[[table]]
+name = "app_user"
+
+[[table.column]]
+name = "id"
+data_type = "integer"
+is_nullable = false
+default = "nextval('users_id_seq'::regclass)"
+
+[[table.column]]
+name = "username"
+data_type = "character varying"
+is_nullable = false
+
+[[table.column]]
+name = "email"
+data_type = "character varying"
+is_nullable = false
+
+[[table.column]]
+name = "password_hash"
+data_type = "character varying"
+is_nullable = false
+
+[[table.column]]
+name = "created_at"
+data_type = "timestamp without time zone"
+is_nullable = true
+default = "now()"
+
+[[table.column]]
+name = "updated_at"
+data_type = "timestamp without time zone"
+is_nullable = true
+default = "now()"
+
+[[table.index]]
+name = "users_email_key"
+columns = ["email"]
+is_unique = true
+index_type = "btree"
+
+[[table.index]]
+name = "users_username_key"
+columns = ["username"]
+is_unique = true
+index_type = "btree"
+
+[[table.index]]
+name = "users_pkey"
+columns = ["id"]
+is_unique = true
+index_type = "btree"
+
+[[table]]
+name = "cart"
+
+[[table.column]]
+name = "id"
+data_type = "integer"
+is_nullable = false
+default = "nextval('cart_id_seq'::regclass)"
+
+[[table.column]]
+name = "app_user_id"
+data_type = "integer"
+is_nullable = false
+
+[[table.column]]
+name = "created_at"
+data_type = "timestamp without time zone"
+is_nullable = true
+default = "now()"
+
+[[table.foreign_key]]
+column = "app_user_id"
+referenced_table = "app_user"
+referenced_column = "id"
+
+[[table.index]]
+name = "cart_pkey"
+columns = ["id"]
+is_unique = true
+index_type = "btree"
+
+[[table]]
+name = "cart_product"
+
+[[table.column]]
+name = "cart_id"
+data_type = "integer"
+is_nullable = false
+
+[[table.column]]
+name = "product_id"
+data_type = "integer"
+is_nullable = false
+
+[[table.column]]
+name = "quantity"
+data_type = "integer"
+is_nullable = true
+default = "1"
+
+[[table.foreign_key]]
+column = "cart_id"
+referenced_table = "cart"
+referenced_column = "id"
+
+[[table.foreign_key]]
+column = "product_id"
+referenced_table = "product"
+referenced_column = "id"
+
+[[table.index]]
+name = "cart_product_pkey"
+columns = [
+    "cart_id",
+    "product_id",
+]
+is_unique = true
+index_type = "btree"
+
+[[table]]
+name = "product"
+
+[[table.column]]
+name = "id"
+data_type = "integer"
+is_nullable = false
+default = "nextval('product_id_seq'::regclass)"
+
+[[table.column]]
+name = "name"
+data_type = "text"
+is_nullable = false
+
+[[table.column]]
+name = "price"
+data_type = "numeric"
+is_nullable = false
+
+[[table.column]]
+name = "stock"
+data_type = "integer"
+is_nullable = false
+default = "0"
+
+[[table.column]]
+name = "created_at"
+data_type = "timestamp without time zone"
+is_nullable = false
+default = "now()"
+
+[[table.index]]
+name = "product_pkey"
+columns = ["id"]
+is_unique = true
+index_type = "btree"
